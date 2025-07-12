@@ -1,0 +1,80 @@
+tags:
+  - Quiz
+summary: Creacion de Quices
+description: Creacion de quices tomando el id del Usuario.
+security:
+  - BearerAuth: []
+parameters:
+  - name: Authorization
+    in: header
+    description: Token JWT con formato "Bearer <token>"
+    required: true
+    schema:
+      type: string
+      example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MjAwOTk3NywianRpIjoiNzY0ZWI3NTUtMmJmOC00NDdkLTgyNDgtOTI1ZTY5NmU4NTkzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Imx1aXNAZ21haWwuY29tIiwibmJmIjoxNzUyMDA5OTc3LCJjc3JmIjoiODM0MjRhNjQtYTY2YS00OTNmLWJiNzYtY2IwZWVjMDY1NGRiIiwiZXhwIjoxNzUyNjE0Nzc3fQ.tqGDsTBT60e8qXq4uUWJ_DSXqroPpSmSzsaq-YzRvDU
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      required:
+        - id
+        - title
+        - questions
+      properties:
+        id:
+          type: integer
+          example: 6858a9d9c1e99b58e1659dc5
+        title:
+          type: string
+          example: "Geografia"
+        questions:
+          type: array
+          items:
+            type: object
+            required:
+              - question
+              - options
+              - correct
+              - value
+            properties:
+              question:
+                type: string
+                example: "¿Cuántos continentes hay?"
+              options:
+                type: array
+                items:
+                  type: string
+                example: ["4", "5", "6", "7"]
+              correct:
+                type: string
+                example: "7"
+              value:
+                type: integer
+                example: 5
+          
+responses:
+  200:
+    description: Usuario encontrado.
+    content:
+      application/json:
+        example:
+          access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+  401:
+    description: Credenciales inválidas.
+    content:
+      application/json:
+        example:
+          message: Incorrect user or password
+  400:
+    description: Campos faltantes.
+    content:
+      application/json:
+        example:
+          message: Email and password are required
+  422:
+    description: UNPROCESSABLE ENTITY.
+    content:
+      application/json:
+        example:
+          message: Signature verification failed
