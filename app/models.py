@@ -1,6 +1,7 @@
 from datetime import datetime
 from bson import ObjectId
 from typing import List, Dict
+from mongoengine import Document as MongoDocument, StringField, DateTimeField, ListField
 
 class Questionary:
     def __init__(
@@ -35,3 +36,37 @@ class Questionary:
             created_at=data.get('created_at',''),
             questions=data.get('questions', []),
         )
+
+class Document(MongoDocument):
+    title = StringField(required=True)
+    description = StringField(default="")
+    tags = ListField(StringField(max_length=50), default=list)
+    upload_date = DateTimeField(default=datetime.utcnow)
+    filename = StringField(required=True)
+    content_type = StringField(required=True)
+    file_size = StringField(required=True)
+    user_id = StringField(required=True)
+    file_id = StringField(required=True)
+    pages = StringField(default="1")
+
+    meta = {
+        'collection': 'documents'
+    }
+
+    def to_dict(self):
+        return {
+            'id': str(self.id),
+            'title': self.title,
+            'description': self.description,
+            'tags': self.tags,
+            'upload_date': self.upload_date.isoformat(),
+            'filename': self.filename,
+            'content_type': self.content_type,
+            'file_size': self.file_size,
+            'user_id': self.user_id,
+            'file_id': self.file_id,
+            'pages': self.pages
+        }
+
+    def __str__(self):
+        return f"{self.title} ({self.filename})"
