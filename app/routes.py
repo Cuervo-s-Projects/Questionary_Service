@@ -24,6 +24,15 @@ def create():
         response = requests.get("http://127.0.0.1:5000/api/profile", headers=headers)
         data_rp = response.json()
 
+        response = requests.get("http://127.0.0.1:5000/api/type_user", headers=headers)
+        data_tp = response.json()
+        user = data_tp.get('roles')
+        
+        if user[0] == "student":
+            return jsonify({
+                "message": "El usuario no puede crear cuestonarios"
+            })
+
         questionary_service = QuestionaryService()
         status = questionary_service.create(
             id=str(data.get('id')),
