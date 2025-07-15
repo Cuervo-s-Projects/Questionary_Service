@@ -2,7 +2,8 @@ from flask import Flask
 from flask_cors import CORS
 from config import Config
 from app.extensions import jwt, swagger
-from app.routes import class_bp 
+from app.routes import class_bp
+from app.document_routes import documents_bp
 
 def create_app():
     app = Flask(__name__)
@@ -20,5 +21,6 @@ def create_app():
     })
 
     app.register_blueprint(class_bp, url_prefix="/api/class")
+    app.register_blueprint(documents_bp, url_prefix="/api/documents")
     #print(app.url_map)
     return app
