@@ -1,6 +1,5 @@
 from app.models import Questionary
 from config.db import mongodb
-from bson import ObjectId
 
 class Repository:
 
@@ -31,8 +30,8 @@ class Repository:
             {'$set': questionary_data}
         )
 
-    def find_by_id(self, questionary_id):
-        questionary_data = self.collection.find_one({'_id': ObjectId(questionary_id)})
+    def find_by_id(self, questionary_id: str):
+        questionary_data = self.collection.find_one({'_id': questionary_id})
         return Questionary.from_dict(questionary_data) if questionary_data else None
     
     def find_by_author_id(self, author_id):

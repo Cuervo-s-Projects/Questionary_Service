@@ -4,6 +4,7 @@ from bson import ObjectId
 from .gridfs_utils import GridFSUtils
 from .models import Document
 from config import Config
+from decouple import config
 import PyPDF2
 import io
 import mongoengine
@@ -12,13 +13,13 @@ documents_bp = Blueprint('documents', __name__)
 
 try:
     mongoengine.connect(
-        db=Config.MONGO_DBNAME,
-        host=Config.MONGO_URI
+        db=config('MONGO_DBNAME', default=''),
+        host=config('MONGO_URI', default='')
     )
 except Exception as e:
     print(f"Error al conectar MongoEngine: {e}")
 
-gridfs_utils = GridFSUtils(Config.MONGO_URI, Config.MONGO_DBNAME)
+gridfs_utils = GridFSUtils(db_name=config('MONGO_DBNAME'), mongo_uri=config('MONGO_URI'))
 
 @documents_bp.route('/upload', methods=['POST'])
 def upload_document():

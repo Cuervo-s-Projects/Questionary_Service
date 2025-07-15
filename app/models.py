@@ -1,20 +1,20 @@
 from datetime import datetime
-from bson import ObjectId
 from typing import List, Dict
 from mongoengine import Document as MongoDocument, StringField, DateTimeField, ListField
+import uuid
 
 class Questionary:
     def __init__(
         self,
-        _id: ObjectId = None,
+        _id: str = None,
         title: str=None,
         author_id: str = None,
         created_at: datetime = None,
         questions: List[Dict] = None,
     ):
-        self._id = ObjectId(_id) or ObjectId()
+        self._id = _id or str(uuid.uuid4())
         self.title = title
-        self.author_id = ObjectId(author_id)
+        self.author_id = author_id or ""
         self.created_at = created_at or datetime.now()
         self.questions = questions or []
 
