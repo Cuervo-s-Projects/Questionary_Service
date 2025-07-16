@@ -1,0 +1,239 @@
+swagger: '2.0'
+info:
+  title: Document Service API
+  description: API for uploading, managing and downloading PDF documents
+  version: '1.0.0'
+host: localhost:5000
+basePath: /api/documents
+schemes:
+  - http
+consumes:
+  - multipart/form-data
+  - application/json
+produces:
+  - application/json
+  - application/pdf
+
+paths:
+  /upload:
+    post:
+      summary: Upload a PDF document
+      description: Upload a PDF file with metadata
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: file
+          in: formData
+          type: file
+          required: true
+          description: PDF file to upload
+        - name: title
+          in: formData
+          type: string
+          description: Title of the document
+        - name: description
+          in: formData
+          type: string
+          description: Description of the document
+        - name: tags
+          in: formData
+          type: string
+          description: Comma-separated tags
+        - name: user_id
+          in: formData
+          type: string
+          description: ID of the user uploading the document
+      responses:
+        201:
+          description: Document uploaded successfully
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              document_id:
+                type: string
+              file_id:
+                type: string
+              pages:
+                type: string
+        400:
+          description: Bad request
+        500:
+          description: Internal server error
+
+  /documents:
+    get:
+      summary: List documents
+      description: Get a list of all documents with optional filtering
+      parameters:
+        - name: search
+          in: query
+          type: string
+          description: Search term for title and description
+        - name: tag
+          in: query
+          type: string
+          description: Filter by tag
+        - name: user_id
+          in: query
+          type: string
+          description: Filter by user ID
+      responses:
+        200:
+          description: List of documents
+          schema:
+            type: object
+            properties:
+              documents:
+                type: array
+                items:
+                  $ref: '#/definitions/Document'
+              total:
+                type: integer
+
+  /documents/{document_id}:
+    get:
+      summary: Get document details
+      description: Get detailed information about a specific document
+      parameters:
+        - name: document_id
+          in: path
+          type: string
+          required: true
+          description: ID of the document
+      responses:
+        200:
+          description: Document details
+          schema:
+            $ref: '#/definitions/Document'
+        404:
+          description: Document not found
+
+    delete:
+      summary: Delete document
+      description: Delete a document and its file from storage
+      parameters:
+        - name: document_id
+          in: path
+          type: string
+          required: true
+          description: ID of the document to delete
+      responses:
+        200:
+          description: Document deleted successfully
+        404:
+          description: Document not found
+
+  /documents/{document_id}/download:
+    get:
+      summary: Download document by ID
+      description: Download the PDF file using document ID
+      parameters:
+        - name: document_id
+          in: path
+          type: string
+          required: true
+          description: ID of the document to download
+      produces:
+        - application/pdf
+      responses:
+        200:
+          description: PDF file download
+        404:
+          description: Document not found
+
+  /download/{file_id}:
+    get:
+      summary: Download document by file ID
+      description: Download the PDF file using file ID
+      parameters:
+        - name: file_id
+          in: path
+          type: string
+          required: true
+          description: GridFS file ID
+      produces:
+        - application/pdf
+      responses:
+        200:
+          description: PDF file download
+        404:
+          description: File not found
+
+  /documents/search:
+    get:
+      summary: Advanced document search
+      description: Search documents with multiple criteria
+      parameters:
+        - name: title
+          in: query
+          type: string
+          description: Search by title
+        - name: description
+          in: query
+          type: string
+          description: Search by description
+        - name: tags
+          in: query
+          type: string
+          description: Search by tags (comma-separated)
+        - name: user_id
+          in: query
+          type: string
+          description: Search by user ID
+      responses:
+        200:
+          description: Search results
+          schema:
+            type: object
+            properties:
+              documents:
+                type: array
+                items:
+                  $ref: '#/definitions/Document'
+              total:
+                type: integer
+              search_params:
+                type: object
+
+definitions:
+  Document:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Document ID
+      title:
+        type: string
+        description: Document title
+      description:
+        type: string
+        description: Document description
+      tags:
+        type: array
+        items:
+          type: string
+        description: Document tags
+      upload_date:
+        type: string
+        format: date-time
+        description: Upload timestamp
+      filename:
+        type: string
+        description: Original filename
+      content_type:
+        type: string
+        description: MIME type
+      file_size:
+        type: string
+        description: File size in bytes
+      user_id:
+        type: string
+        description: User who uploaded the document
+      file_id:
+        type: string
+        description: GridFS file ID
+      pages:
+        type: string
+        description: Number of pages in the PDF
