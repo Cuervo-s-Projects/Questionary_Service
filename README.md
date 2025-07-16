@@ -162,6 +162,6 @@ Puedes definir nuevos archivos de prueba dentro del directorio `test/`.
 
 ## 👨‍💼 Mantenimiento
 
-* **Autores**: Equipo de desarrollo interno
+* **Autores**: ddelgadopi, gdavidg-27, cchois, Juramirezlop, slendrac123, IvanMolinaL
 * **Estado del proyecto**: En desarrollo
 * **Cómo contribuir**: Crear Pull Requests o Issues con descripción detallada
