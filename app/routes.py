@@ -19,7 +19,7 @@ def create():
     try:
         user_id = get_jwt_identity()
         data = request.get_json()
-        token = request.authorization
+        token = request.headers.get("Authorization")
         headers = {"Authorization": f"{token}"}
         response = requests.get("http://127.0.0.1:5000/api/profile", headers=headers)
         data_rp = response.json()
@@ -27,7 +27,8 @@ def create():
         response = requests.get("http://127.0.0.1:5000/api/type_user", headers=headers)
         data_tp = response.json()
         user = data_tp.get('roles')
-        
+
+
         if user[0] == "student":
             return jsonify({
                 "message": "El usuario no puede crear cuestonarios"
@@ -42,7 +43,8 @@ def create():
         )
 
         return jsonify({
-            "msg": status
+            "msg": "Questionnaire Created",
+            "id": str(status.inserted_id)
         })
 
     except Exception as e:
@@ -126,4 +128,16 @@ def get_quiz(quiz_id):
         return jsonify({
             "message": str(e)
         }),400
-    
+
+@class_bp.route('/delete/<id>', methods=['GET'])     
+def delete(id):
+    try:
+        quizservice = QuestionaryService()
+        status = quizservice.delete_by_id(quiz_id=id)
+        return jsonify({
+            "message": "Successful elimination"
+        }),400
+    except Exception as e:
+        return jsonify({
+            "message": str(e)
+        }),400
