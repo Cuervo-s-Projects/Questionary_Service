@@ -28,6 +28,7 @@ def create():
         data_tp = response.json()
         user = data_tp.get('roles')
 
+
         if user[0] == "student":
             return jsonify({
                 "message": "El usuario no puede crear cuestonarios"

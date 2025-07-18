@@ -14,6 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
+
     # Inicializar extensiones
     jwt.init_app(app)
     swagger.init_app(app)
@@ -38,4 +39,5 @@ def create_app():
     print("Rutas registradas:")
     for rule in app.url_map.iter_rules():
         print(rule)
+
     return app
