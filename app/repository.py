@@ -39,4 +39,4 @@ class Repository:
         return author_id_data
     
     def delete(self, class_id):
-        return self.collection.delete_one({'_id': ObjectId(class_id)})
+        return self.collection.delete_one({'_id': class_id})

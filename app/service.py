@@ -14,9 +14,13 @@ class QuestionaryService:
             questions=questions
                     ) 
         
-        self.repository.create(quiz)
-        return "OK"
+        status = self.repository.create(quiz)
+        return status
     
     def get_by_id(self, quiz_id):
         quiz = self.repository.find_by_id(questionary_id=quiz_id)
         return quiz
+    
+    def delete_by_id(self, quiz_id):
+        status = self.repository.delete(class_id=quiz_id)
+        return status
