@@ -36,7 +36,7 @@ def create():
 
         questionary_service = QuestionaryService()
         status = questionary_service.create(
-            id=str(data.get('id')),
+            id=str(data.get('video_id')),
             title=data.get('title'),
             author_id=data_rp.get('_id'),
             questions=data.get('questions'),
