@@ -1,6 +1,12 @@
+![Portada](portada_cuervos.jpg)
 # 📄 Servicio de Gestión de Documentos y Cuestionarios
 
 Este microservicio Flask proporciona endpoints para la **gestión de documentos PDF** (carga, descarga, búsqueda) y la **creación y evaluación de cuestionarios**. Forma parte de un ecosistema distribuido y modular basado en autenticación JWT y documentación Swagger.
+
+---
+
+## ✨ Funcionalidades Principales
+- **Creación dinámica de cuestionarios**
 
 ---
 
@@ -115,20 +121,6 @@ Este proyecto incluye documentación de los endpoints en formato **YAML**, ubica
 
 ---
 
-## 🧪 Pruebas
-
-Actualmente el proyecto tiene una base para pruebas usando `pytest`.
-
-Para ejecutarlas:
-
-```bash
-pytest
-```
-
-Puedes definir nuevos archivos de prueba dentro del directorio `test/`.
-
----
-
 ## 📁 Estructura del proyecto
 
 ```
@@ -151,17 +143,14 @@ Puedes definir nuevos archivos de prueba dentro del directorio `test/`.
 
 ---
 
-## 🤔 Posibles mejoras
+## 📬 Contacto
+- Jacel Thomás Enciso Pinzón - [@slendrac123](https://github.com/slendrac123) - Correo: jencisop@unal.edu.co
+- Daniel Santiago Delgado Pinilla - [@ddelgadopi](https://github.com/ddelgadopi) - Correo: ddelgadopi@unal.edu.co
+- Juan David Ramírez López - [@Juramirezlop](https://github.com/Juramirezlop) - Correo: juramirezlop@unal.edu.co
+- Jesus David Giraldo Gomez - [@gdavidg-27](https://github.com/gdavidg-27) - Correo: jedgiraldogo@unal.edu.co
+- Cristian Liu Chois Amaya - [@cchois](https://github.com/cchois) - Correo: cchois@unal.edu.co
+- Iván David Molina Leguízamo - [@ivdmolinale](https://gitlab.com/ivdmolinale) - Correo: ivdmolinale@unal.edu.co
 
-* ✅ Agregar más pruebas unitarias a `test/`.
-* ✅ Asegurar manejo de errores coherente y uniforme.
-* ✅ Separar validaciones en esquemas (`marshmallow`, `pydantic`).
-* ✅ Agregar documentación `.env.example`.
+Proyecto: [https://github.com/Cuervo-s-Projects/Frontend_cuervos](https://github.com/Cuervo-s-Projects/Frontend_cuervos)
 
 ---
-
-## 👨‍💼 Mantenimiento
-
-* **Autores**: ddelgadopi, gdavidg-27, cchois, Juramirezlop, slendrac123, IvanMolinaL
-* **Estado del proyecto**: En desarrollo
-* **Cómo contribuir**: Crear Pull Requests o Issues con descripción detallada
